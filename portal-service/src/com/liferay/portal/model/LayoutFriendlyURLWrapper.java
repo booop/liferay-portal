@@ -14,6 +14,10 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.Validator;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +26,8 @@ import java.util.Map;
  * This class is a wrapper for {@link LayoutFriendlyURL}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       LayoutFriendlyURL
+ * @author Brian Wing Shun Chan
+ * @see LayoutFriendlyURL
  * @generated
  */
 public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
@@ -50,6 +54,10 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 		attributes.put("layoutFriendlyURLId", getLayoutFriendlyURLId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
+		attributes.put("userId", getUserId());
+		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("plid", getPlid());
 		attributes.put("privateLayout", getPrivateLayout());
 		attributes.put("friendlyURL", getFriendlyURL());
@@ -82,6 +90,30 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 
 		if (companyId != null) {
 			setCompanyId(companyId);
+		}
+
+		Long userId = (Long)attributes.get("userId");
+
+		if (userId != null) {
+			setUserId(userId);
+		}
+
+		String userName = (String)attributes.get("userName");
+
+		if (userName != null) {
+			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long plid = (Long)attributes.get("plid");
@@ -207,6 +239,108 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	@Override
 	public void setCompanyId(long companyId) {
 		_layoutFriendlyURL.setCompanyId(companyId);
+	}
+
+	/**
+	* Returns the user ID of this layout friendly u r l.
+	*
+	* @return the user ID of this layout friendly u r l
+	*/
+	@Override
+	public long getUserId() {
+		return _layoutFriendlyURL.getUserId();
+	}
+
+	/**
+	* Sets the user ID of this layout friendly u r l.
+	*
+	* @param userId the user ID of this layout friendly u r l
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_layoutFriendlyURL.setUserId(userId);
+	}
+
+	/**
+	* Returns the user uuid of this layout friendly u r l.
+	*
+	* @return the user uuid of this layout friendly u r l
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.lang.String getUserUuid()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _layoutFriendlyURL.getUserUuid();
+	}
+
+	/**
+	* Sets the user uuid of this layout friendly u r l.
+	*
+	* @param userUuid the user uuid of this layout friendly u r l
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_layoutFriendlyURL.setUserUuid(userUuid);
+	}
+
+	/**
+	* Returns the user name of this layout friendly u r l.
+	*
+	* @return the user name of this layout friendly u r l
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _layoutFriendlyURL.getUserName();
+	}
+
+	/**
+	* Sets the user name of this layout friendly u r l.
+	*
+	* @param userName the user name of this layout friendly u r l
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_layoutFriendlyURL.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this layout friendly u r l.
+	*
+	* @return the create date of this layout friendly u r l
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _layoutFriendlyURL.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this layout friendly u r l.
+	*
+	* @param createDate the create date of this layout friendly u r l
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_layoutFriendlyURL.setCreateDate(createDate);
+	}
+
+	/**
+	* Returns the modified date of this layout friendly u r l.
+	*
+	* @return the modified date of this layout friendly u r l
+	*/
+	@Override
+	public java.util.Date getModifiedDate() {
+		return _layoutFriendlyURL.getModifiedDate();
+	}
+
+	/**
+	* Sets the modified date of this layout friendly u r l.
+	*
+	* @param modifiedDate the modified date of this layout friendly u r l
+	*/
+	@Override
+	public void setModifiedDate(java.util.Date modifiedDate) {
+		_layoutFriendlyURL.setModifiedDate(modifiedDate);
 	}
 
 	/**
@@ -402,6 +536,31 @@ public class LayoutFriendlyURLWrapper implements LayoutFriendlyURL,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_layoutFriendlyURL.persist();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutFriendlyURLWrapper)) {
+			return false;
+		}
+
+		LayoutFriendlyURLWrapper layoutFriendlyURLWrapper = (LayoutFriendlyURLWrapper)obj;
+
+		if (Validator.equals(_layoutFriendlyURL,
+					layoutFriendlyURLWrapper._layoutFriendlyURL)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _layoutFriendlyURL.getStagedModelType();
 	}
 
 	/**

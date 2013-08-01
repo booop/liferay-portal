@@ -17,8 +17,8 @@ package com.liferay.portlet.usergroupsadmin.lar;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.UserGroup;
@@ -39,9 +39,11 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "user_groups_admin";
 
 	public UserGroupsAdminPortletDataHandler() {
-		super();
-
 		setDataLevel(DataLevel.PORTAL);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "user-groups", true, true, null,
+				UserGroup.class.getName()));
 	}
 
 	@Override
@@ -109,17 +111,14 @@ public class UserGroupsAdminPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new UserGroupExportActionableDynamicQuery(portletDataContext);
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
-		manifestSummary.addModelCount(
-			UserGroup.class, actionableDynamicQuery.performCount());
+		actionableDynamicQuery.performCount();
 	}
 
 }

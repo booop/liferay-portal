@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -72,8 +73,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
-			{ "versionUserId", Types.BIGINT },
-			{ "versionUserName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "classNameId", Types.BIGINT },
@@ -96,7 +95,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			{ "custom2ImageId", Types.BIGINT },
 			{ "manualCheckInRequired", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,versionUserId LONG,versionUserName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table DLFileEntry (uuid_ VARCHAR(75) null,fileEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,repositoryId LONG,folderId LONG,name VARCHAR(255) null,extension VARCHAR(75) null,mimeType VARCHAR(75) null,title VARCHAR(255) null,description STRING null,extraSettings TEXT null,fileEntryTypeId LONG,version VARCHAR(75) null,size_ LONG,readCount INTEGER,smallImageId LONG,largeImageId LONG,custom1ImageId LONG,custom2ImageId LONG,manualCheckInRequired BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table DLFileEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY dlFileEntry.folderId ASC, dlFileEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DLFileEntry.folderId ASC, DLFileEntry.name ASC";
@@ -141,8 +140,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
-		model.setVersionUserId(soapModel.getVersionUserId());
-		model.setVersionUserName(soapModel.getVersionUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setClassNameId(soapModel.getClassNameId());
@@ -234,8 +231,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
-		attributes.put("versionUserId", getVersionUserId());
-		attributes.put("versionUserName", getVersionUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("classNameId", getClassNameId());
@@ -297,18 +292,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 		if (userName != null) {
 			setUserName(userName);
-		}
-
-		Long versionUserId = (Long)attributes.get("versionUserId");
-
-		if (versionUserId != null) {
-			setVersionUserId(versionUserId);
-		}
-
-		String versionUserName = (String)attributes.get("versionUserName");
-
-		if (versionUserName != null) {
-			setVersionUserName(versionUserName);
 		}
 
 		Date createDate = (Date)attributes.get("createDate");
@@ -439,8 +422,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -463,8 +446,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryId() {
 		return _fileEntryId;
 	}
@@ -474,8 +457,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_fileEntryId = fileEntryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -497,8 +480,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -520,8 +503,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -553,8 +536,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -569,46 +552,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
-	public long getVersionUserId() {
-		return _versionUserId;
-	}
-
 	@Override
-	public void setVersionUserId(long versionUserId) {
-		_versionUserId = versionUserId;
-	}
-
-	@Override
-	public String getVersionUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getVersionUserId(), "uuid",
-			_versionUserUuid);
-	}
-
-	@Override
-	public void setVersionUserUuid(String versionUserUuid) {
-		_versionUserUuid = versionUserUuid;
-	}
-
-	@Override
-	@JSON
-	public String getVersionUserName() {
-		if (_versionUserName == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _versionUserName;
-		}
-	}
-
-	@Override
-	public void setVersionUserName(String versionUserName) {
-		_versionUserName = versionUserName;
-	}
-
-	@Override
-	@JSON
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -618,8 +563,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -649,8 +594,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -660,8 +605,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_classNameId = classNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -671,8 +616,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_classPK = classPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -682,8 +627,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_repositoryId = repositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -705,8 +650,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -731,8 +676,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtension() {
 		if (_extension == null) {
 			return StringPool.BLANK;
@@ -747,8 +692,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_extension = extension;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMimeType() {
 		if (_mimeType == null) {
 			return StringPool.BLANK;
@@ -773,8 +718,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalMimeType);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -799,8 +744,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return GetterUtil.getString(_originalTitle);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -815,8 +760,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getExtraSettings() {
 		if (_extraSettings == null) {
 			return StringPool.BLANK;
@@ -831,8 +776,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_extraSettings = extraSettings;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileEntryTypeId() {
 		return _fileEntryTypeId;
 	}
@@ -854,8 +799,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		return _originalFileEntryTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getVersion() {
 		if (_version == null) {
 			return StringPool.BLANK;
@@ -870,8 +815,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_version = version;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSize() {
 		return _size;
 	}
@@ -881,8 +826,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_size = size;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getReadCount() {
 		return _readCount;
 	}
@@ -892,8 +837,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_readCount = readCount;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -903,8 +848,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_smallImageId = smallImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getLargeImageId() {
 		return _largeImageId;
 	}
@@ -914,8 +859,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_largeImageId = largeImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCustom1ImageId() {
 		return _custom1ImageId;
 	}
@@ -925,8 +870,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_custom1ImageId = custom1ImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCustom2ImageId() {
 		return _custom2ImageId;
 	}
@@ -936,8 +881,8 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		_custom2ImageId = custom2ImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getManualCheckInRequired() {
 		return _manualCheckInRequired;
 	}
@@ -950,6 +895,12 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	@Override
 	public void setManualCheckInRequired(boolean manualCheckInRequired) {
 		_manualCheckInRequired = manualCheckInRequired;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DLFileEntry.class.getName()), getClassNameId());
 	}
 
 	public long getColumnBitmask() {
@@ -989,8 +940,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		dlFileEntryImpl.setCompanyId(getCompanyId());
 		dlFileEntryImpl.setUserId(getUserId());
 		dlFileEntryImpl.setUserName(getUserName());
-		dlFileEntryImpl.setVersionUserId(getVersionUserId());
-		dlFileEntryImpl.setVersionUserName(getVersionUserName());
 		dlFileEntryImpl.setCreateDate(getCreateDate());
 		dlFileEntryImpl.setModifiedDate(getModifiedDate());
 		dlFileEntryImpl.setClassNameId(getClassNameId());
@@ -1135,16 +1084,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 			dlFileEntryCacheModel.userName = null;
 		}
 
-		dlFileEntryCacheModel.versionUserId = getVersionUserId();
-
-		dlFileEntryCacheModel.versionUserName = getVersionUserName();
-
-		String versionUserName = dlFileEntryCacheModel.versionUserName;
-
-		if ((versionUserName != null) && (versionUserName.length() == 0)) {
-			dlFileEntryCacheModel.versionUserName = null;
-		}
-
 		Date createDate = getCreateDate();
 
 		if (createDate != null) {
@@ -1248,7 +1187,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(59);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1262,10 +1201,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(getUserId());
 		sb.append(", userName=");
 		sb.append(getUserName());
-		sb.append(", versionUserId=");
-		sb.append(getVersionUserId());
-		sb.append(", versionUserName=");
-		sb.append(getVersionUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
@@ -1315,7 +1250,7 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(91);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.portlet.documentlibrary.model.DLFileEntry");
@@ -1344,14 +1279,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 		sb.append(
 			"<column><column-name>userName</column-name><column-value><![CDATA[");
 		sb.append(getUserName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionUserId</column-name><column-value><![CDATA[");
-		sb.append(getVersionUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>versionUserName</column-name><column-value><![CDATA[");
-		sb.append(getVersionUserName());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
@@ -1461,9 +1388,6 @@ public class DLFileEntryModelImpl extends BaseModelImpl<DLFileEntry>
 	private long _originalUserId;
 	private boolean _setOriginalUserId;
 	private String _userName;
-	private long _versionUserId;
-	private String _versionUserUuid;
-	private String _versionUserName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _classNameId;

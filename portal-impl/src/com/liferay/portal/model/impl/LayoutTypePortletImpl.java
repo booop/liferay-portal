@@ -70,7 +70,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -282,6 +281,25 @@ public class LayoutTypePortletImpl
 			portlets, staticPortlets);
 
 		return addStaticPortlets(portlets, staticPortlets, embeddedPortlets);
+	}
+
+	@Override
+	public List<Portlet> getAllPortlets(boolean includeSystem)
+		throws PortalException, SystemException {
+
+		List<Portlet> filteredPortlets = new ArrayList<Portlet>();
+
+		List<Portlet> portlets = getAllPortlets();
+
+		for (Portlet portlet : portlets) {
+			if (portlet.isSystem() && !includeSystem) {
+				continue;
+			}
+
+			filteredPortlets.add(portlet);
+		}
+
+		return filteredPortlets;
 	}
 
 	@Override
@@ -1383,9 +1401,6 @@ public class LayoutTypePortletImpl
 					PortletKeys.PREFS_OWNER_TYPE_USER, layout.getPlid()));
 		}
 
-		Set<String> portletAddDefaultResourceCheckWhiteList =
-			PortalUtil.getPortletAddDefaultResourceCheckWhitelist();
-
 		for (PortletPreferences portletPreference : portletPreferences) {
 			String portletId = portletPreference.getPortletId();
 
@@ -1394,10 +1409,8 @@ public class LayoutTypePortletImpl
 
 			if (Validator.isNull(portletId) ||
 				columnPortlets.contains(portlet) ||
-				staticPortlets.contains(portlet) ||
-				portlet.isSystem() || portlet.isUndeployedPortlet() ||
-				!portlet.isActive() ||
-				!portletAddDefaultResourceCheckWhiteList.contains(portletId)) {
+				staticPortlets.contains(portlet) || !portlet.isReady() ||
+				portlet.isUndeployedPortlet() || !portlet.isActive()) {
 
 				continue;
 			}
@@ -1571,10 +1584,10 @@ public class LayoutTypePortletImpl
 
 		String[] portletIds = StringUtil.split(value);
 
-		for (int i = 0; i < portletIds.length; i++) {
+		for (String portletId : portletIds) {
 			try {
 				String rootPortletId = PortletConstants.getRootPortletId(
-					portletIds[i]);
+					portletId);
 
 				if (!PortletPermissionUtil.contains(
 						permissionChecker, rootPortletId,
@@ -1589,17 +1602,16 @@ public class LayoutTypePortletImpl
 
 			String newPortletId = null;
 
-			if (PortletConstants.hasInstanceId(portletIds[i])) {
+			if (PortletConstants.hasInstanceId(portletId)) {
 				newPortletId = PortletConstants.assemblePortletId(
-					portletIds[i], _portalPreferences.getUserId(),
+					portletId, _portalPreferences.getUserId(),
 					generateInstanceId());
 
 				copyPreferences(
-					_portalPreferences.getUserId(), portletIds[i],
-					newPortletId);
+					_portalPreferences.getUserId(), portletId, newPortletId);
 			}
 			else {
-				newPortletId = portletIds[i];
+				newPortletId = portletId;
 			}
 
 			newPortletIds.add(newPortletId);

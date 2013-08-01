@@ -113,7 +113,9 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
-	public long getTemplateHandlerClassNameId(DDMTemplate template) {
+	public long getTemplateHandlerClassNameId(
+		DDMTemplate template, long classNameId) {
+
 		return PortalUtil.getClassNameId(JournalArticle.class);
 	}
 
@@ -133,7 +135,7 @@ public class JournalDDMDisplay extends BaseDDMDisplay {
 			LiferayPortletResponse liferayPortletResponse, long classPK)
 		throws Exception {
 
-		if (classPK < 0) {
+		if (classPK <= 0) {
 			return StringPool.BLANK;
 		}
 

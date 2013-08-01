@@ -16,11 +16,13 @@ package com.liferay.portlet.mobiledevicerules.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.mobiledevicerules.model.MDRAction;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -46,12 +48,17 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 	public static final String NAMESPACE = "mobile_device_rules";
 
 	public MDRPortletDataHandler() {
+		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(MDRAction.class, Layout.class),
+			new StagedModelType(MDRRule.class),
+			new StagedModelType(MDRRuleGroup.class),
+			new StagedModelType(MDRRuleGroupInstance.class, Layout.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "rules", true, false, null, MDRRule.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "actions", true, false, null,
-				MDRAction.class.getName()));
+				MDRAction.class.getName(), Layout.class.getName()));
 		setImportControls(getExportControls());
 		setPublishToLiveByDefault(true);
 	}
@@ -94,7 +101,16 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "actions")) {
 			ActionableDynamicQuery actionsActionableDynamicQuery =
-				new MDRActionExportActionableDynamicQuery(portletDataContext);
+				new MDRActionExportActionableDynamicQuery(portletDataContext) {
+
+				@Override
+				protected StagedModelType getStagedModelType() {
+					return new StagedModelType(
+						PortalUtil.getClassNameId(MDRAction.class),
+						StagedModelType.REFERRER_CLASS_NAME_ID_ALL);
+				}
+
+			};
 
 			actionsActionableDynamicQuery.performActions();
 		}
@@ -141,38 +157,46 @@ public class MDRPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
 
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
-
 		ActionableDynamicQuery actionsActionableDynamicQuery =
-			new MDRActionExportActionableDynamicQuery(portletDataContext);
+			new MDRActionExportActionableDynamicQuery(portletDataContext) {
 
-		manifestSummary.addModelCount(
-			MDRAction.class, actionsActionableDynamicQuery.performCount());
+			@Override
+			protected StagedModelType getStagedModelType() {
+				return new StagedModelType(
+					MDRAction.class.getName(), Layout.class.getName());
+			}
+
+		};
+
+		actionsActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery rulesActionableDynamicQuery =
 			new MDRRuleExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MDRRule.class, rulesActionableDynamicQuery.performCount());
+		rulesActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery ruleGroupsActionableDynamicQuery =
 			new MDRRuleGroupExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			MDRRuleGroup.class,
-			ruleGroupsActionableDynamicQuery.performCount());
+		ruleGroupsActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery ruleGroupInstancesActionableDynamicQuery =
 			new MDRRuleGroupInstanceExportActionableDynamicQuery(
-				portletDataContext);
+				portletDataContext) {
 
-		manifestSummary.addModelCount(
-			MDRRuleGroupInstance.class,
-			ruleGroupInstancesActionableDynamicQuery.performCount());
+				@Override
+				protected StagedModelType getStagedModelType() {
+					return new StagedModelType(
+						MDRRuleGroupInstance.class.getName(),
+						Layout.class.getName());
+				}
+			};
+
+		ruleGroupInstancesActionableDynamicQuery.performCount();
 	}
 
 }

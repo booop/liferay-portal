@@ -323,6 +323,15 @@ public class LayoutSetBranchLocalServiceImpl
 	}
 
 	@Override
+	public LayoutSetBranch fetchLayoutSetBranch(
+			long groupId, boolean privateLayout, String name)
+		throws SystemException {
+
+		return layoutSetBranchPersistence.fetchByG_P_N(
+			groupId, privateLayout, name);
+	}
+
+	@Override
 	public LayoutSetBranch getLayoutSetBranch(
 			long groupId, boolean privateLayout, String name)
 		throws PortalException, SystemException {
@@ -346,7 +355,8 @@ public class LayoutSetBranchLocalServiceImpl
 			long groupId, boolean privateLayout)
 		throws PortalException, SystemException {
 
-		return layoutSetBranchFinder.findByMaster(groupId, privateLayout);
+		return layoutSetBranchPersistence.findByG_P_M_First(
+			groupId, privateLayout, true, null);
 	}
 
 	/**
@@ -384,10 +394,11 @@ public class LayoutSetBranchLocalServiceImpl
 		}
 
 		if (layoutSetBranchId > 0) {
-			try {
-				return getLayoutSetBranch(layoutSetBranchId);
-			}
-			catch (NoSuchLayoutSetBranchException nslsbe) {
+			LayoutSetBranch layoutSetBranch = fetchLayoutSetBranch(
+				layoutSetBranchId);
+
+			if (layoutSetBranch != null) {
+				return layoutSetBranch;
 			}
 		}
 
@@ -549,7 +560,8 @@ public class LayoutSetBranchLocalServiceImpl
 		if (master) {
 			try {
 				LayoutSetBranch masterLayoutSetBranch =
-					layoutSetBranchFinder.findByMaster(groupId, privateLayout);
+					layoutSetBranchPersistence.findByG_P_M_First(
+						groupId, privateLayout, true, null);
 
 				if (layoutSetBranchId !=
 						masterLayoutSetBranch.getLayoutSetBranchId()) {

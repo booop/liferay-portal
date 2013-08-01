@@ -14,6 +14,9 @@
 
 package com.liferay.portal.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,8 +26,8 @@ import java.util.Map;
  * This class is a wrapper for {@link Layout}.
  * </p>
  *
- * @author    Brian Wing Shun Chan
- * @see       Layout
+ * @author Brian Wing Shun Chan
+ * @see Layout
  * @generated
  */
 public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
@@ -1750,6 +1753,11 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	}
 
 	@Override
+	public java.lang.String getFriendlyURL(java.util.Locale locale) {
+		return _layout.getFriendlyURL(locale);
+	}
+
+	@Override
 	public java.util.Map<java.util.Locale, java.lang.String> getFriendlyURLMap()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _layout.getFriendlyURLMap();
@@ -1999,6 +2007,30 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 	public void setTypeSettingsProperties(
 		com.liferay.portal.kernel.util.UnicodeProperties typeSettingsProperties) {
 		_layout.setTypeSettingsProperties(typeSettingsProperties);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof LayoutWrapper)) {
+			return false;
+		}
+
+		LayoutWrapper layoutWrapper = (LayoutWrapper)obj;
+
+		if (Validator.equals(_layout, layoutWrapper._layout)) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _layout.getStagedModelType();
 	}
 
 	/**

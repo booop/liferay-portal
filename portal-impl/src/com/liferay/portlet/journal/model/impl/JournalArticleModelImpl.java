@@ -18,6 +18,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -486,8 +487,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -510,8 +511,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getId() {
 		return _id;
 	}
@@ -521,8 +522,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_id = id;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getResourcePrimKey() {
 		return _resourcePrimKey;
 	}
@@ -549,8 +550,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalResourcePrimKey;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -572,8 +573,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -595,8 +596,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -628,8 +629,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -644,8 +645,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -655,8 +656,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -666,8 +667,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -709,8 +710,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -732,8 +733,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -755,8 +756,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getArticleId() {
 		if (_articleId == null) {
 			return StringPool.BLANK;
@@ -781,8 +782,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalArticleId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public double getVersion() {
 		return _version;
 	}
@@ -804,8 +805,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalVersion;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -865,7 +866,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getDefault());
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -890,7 +891,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getDefault());
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -903,8 +904,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrlTitle() {
 		if (_urlTitle == null) {
 			return StringPool.BLANK;
@@ -929,8 +930,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalUrlTitle);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -990,7 +991,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getDefault());
+		setDescription(description, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1017,7 +1018,7 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 
 	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
+		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1032,8 +1033,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getContent() {
 		if (_content == null) {
 			return StringPool.BLANK;
@@ -1048,8 +1049,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_content = content;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getType() {
 		if (_type == null) {
 			return StringPool.BLANK;
@@ -1064,8 +1065,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_type = type;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStructureId() {
 		if (_structureId == null) {
 			return StringPool.BLANK;
@@ -1090,8 +1091,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalStructureId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTemplateId() {
 		if (_templateId == null) {
 			return StringPool.BLANK;
@@ -1116,8 +1117,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalTemplateId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLayoutUuid() {
 		if (_layoutUuid == null) {
 			return StringPool.BLANK;
@@ -1142,8 +1143,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return GetterUtil.getString(_originalLayoutUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -1153,8 +1154,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_displayDate = displayDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -1164,8 +1165,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_expirationDate = expirationDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getReviewDate() {
 		return _reviewDate;
 	}
@@ -1175,8 +1176,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_reviewDate = reviewDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getIndexable() {
 		return _indexable;
 	}
@@ -1191,8 +1192,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_indexable = indexable;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getSmallImage() {
 		return _smallImage;
 	}
@@ -1207,8 +1208,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_smallImage = smallImage;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getSmallImageId() {
 		return _smallImageId;
 	}
@@ -1230,8 +1231,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalSmallImageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSmallImageURL() {
 		if (_smallImageURL == null) {
 			return StringPool.BLANK;
@@ -1246,8 +1247,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_smallImageURL = smallImageURL;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -1269,8 +1270,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -1291,8 +1292,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -1307,8 +1308,8 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -1316,6 +1317,12 @@ public class JournalArticleModelImpl extends BaseModelImpl<JournalArticle>
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				JournalArticle.class.getName()), getClassNameId());
 	}
 
 	/**

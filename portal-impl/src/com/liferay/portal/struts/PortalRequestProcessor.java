@@ -126,6 +126,7 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		_publicPaths.add(_PATH_PORTAL_LICENSE);
 		_publicPaths.add(_PATH_PORTAL_LOGIN);
 		_publicPaths.add(_PATH_PORTAL_RENDER_PORTLET);
+		_publicPaths.add(_PATH_PORTAL_RESILIENCY);
 		_publicPaths.add(_PATH_PORTAL_TCK);
 		_publicPaths.add(_PATH_PORTAL_UPDATE_PASSWORD);
 		_publicPaths.add(_PATH_PORTAL_VERIFY_EMAIL_ADDRESS);
@@ -753,8 +754,11 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 			}
 
 			if ((user != null) && !user.isEmailAddressVerified() &&
-				emailAddressVerificationRequired &&
-				!path.equals(_PATH_PORTAL_UPDATE_EMAIL_ADDRESS)) {
+				emailAddressVerificationRequired) {
+
+				if (path.equals(_PATH_PORTAL_UPDATE_EMAIL_ADDRESS)) {
+					return _PATH_PORTAL_UPDATE_EMAIL_ADDRESS;
+				}
 
 				return _PATH_PORTAL_VERIFY_EMAIL_ADDRESS;
 			}
@@ -995,6 +999,8 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 
 	private static final String _PATH_PORTAL_RENDER_PORTLET =
 		"/portal/render_portlet";
+
+	private static final String _PATH_PORTAL_RESILIENCY = "/portal/resiliency";
 
 	private static final String _PATH_PORTAL_SETUP_WIZARD =
 		"/portal/setup_wizard";

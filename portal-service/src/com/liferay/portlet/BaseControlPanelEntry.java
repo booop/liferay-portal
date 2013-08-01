@@ -54,7 +54,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	}
 
 	/**
-	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 * @deprecated As of 6.2.0, with no direct replacement.<p>This method was
 	 *             originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to
@@ -73,7 +73,7 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 	}
 
 	/**
-	 * @deprecated As of 6.2, with no direct replacement.<p>This method was
+	 * @deprecated As of 6.2.0, with no direct replacement.<p>This method was
 	 *             originally defined to determine if a portlet should be
 	 *             displayed in the Control Panel. In this version, this method
 	 *             should always return <code>false</code> and remains only to
@@ -109,6 +109,14 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 			PermissionChecker permissionChecker, Group group, Portlet portlet)
 		throws Exception {
 
+		String category = portlet.getControlPanelEntryCategory();
+
+		if (category.equals(PortletCategoryKeys.SITE_ADMINISTRATION_CONTENT) &&
+			group.isLayout() && !portlet.isScopeable()) {
+
+			return true;
+		}
+
 		return false;
 	}
 
@@ -127,10 +135,6 @@ public abstract class BaseControlPanelEntry implements ControlPanelEntry {
 		}
 
 		if (category.startsWith(PortletCategoryKeys.SITE_ADMINISTRATION)) {
-			if (group.isLayout() && !portlet.isScopeable()) {
-				return false;
-			}
-
 			if (permissionChecker.isGroupAdmin(group.getGroupId()) &&
 				!group.isUser()) {
 

@@ -24,6 +24,19 @@ public abstract class BaseIndexWriter
 	implements IndexWriter, SpellCheckIndexWriter {
 
 	@Override
+	public void clearDictionaryIndexes(SearchContext searchContext)
+		throws SearchException {
+
+		if (_spellCheckIndexWriter == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("No spell check index writer configured");
+			}
+		}
+
+		_spellCheckIndexWriter.clearDictionaryIndexes(searchContext);
+	}
+
+	@Override
 	public void indexDictionaries(SearchContext searchContext)
 		throws SearchException {
 
@@ -55,7 +68,7 @@ public abstract class BaseIndexWriter
 		_spellCheckIndexWriter = spellCheckIndexWriter;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(BaseIndexSearcher.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseIndexWriter.class);
 
 	private SpellCheckIndexWriter _spellCheckIndexWriter;
 

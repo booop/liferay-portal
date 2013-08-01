@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -320,8 +321,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -344,8 +345,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFileShortcutId() {
 		return _fileShortcutId;
 	}
@@ -355,8 +356,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_fileShortcutId = fileShortcutId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -378,8 +379,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -401,8 +402,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -422,8 +423,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -438,8 +439,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -449,8 +450,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -460,8 +461,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -471,8 +472,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_repositoryId = repositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -494,8 +495,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getToFileEntryId() {
 		return _toFileEntryId;
 	}
@@ -517,8 +518,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalToFileEntryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getActive() {
 		return _active;
 	}
@@ -545,8 +546,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalActive;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -568,8 +569,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -590,8 +591,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -606,8 +607,8 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -615,6 +616,12 @@ public class DLFileShortcutModelImpl extends BaseModelImpl<DLFileShortcut>
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DLFileShortcut.class.getName()));
 	}
 
 	/**

@@ -105,6 +105,8 @@ public interface Group extends GroupModel, PersistedModel {
 
 	public boolean hasAncestor(long groupId);
 
+	public boolean hasLocalOrRemoteStagingGroup();
+
 	public boolean hasPrivateLayouts();
 
 	public boolean hasPublicLayouts();
@@ -112,7 +114,7 @@ public interface Group extends GroupModel, PersistedModel {
 	public boolean hasStagingGroup();
 
 	/**
-	* @deprecated As of 6.1, renamed to {@link #isRegularSite}
+	* @deprecated As of 6.1.0, renamed to {@link #isRegularSite}
 	*/
 	public boolean isCommunity();
 

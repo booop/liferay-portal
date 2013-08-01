@@ -17,8 +17,8 @@ package com.liferay.portal.resiliency.spi.agent;
 import com.liferay.portal.kernel.resiliency.PortalResiliencyException;
 import com.liferay.portal.kernel.resiliency.spi.agent.annotation.Direction;
 import com.liferay.portal.kernel.servlet.BufferCacheServletResponse;
-import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse.MetaData;
 import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
+import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse.MetaData;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -138,7 +138,7 @@ public class SPIAgentResponse extends SPIAgentSerializable {
 				StringBundler sb = new StringBundler(6);
 
 				sb.append(content.substring(0, index));
-				sb.append("<div class=\"portlet-msg-info\"><strong>");
+				sb.append("<div class=\"alert alert-info\"><strong>");
 				sb.append("This portlet is from SPI ");
 				sb.append(PortalUtil.getPortalPort(false));
 				sb.append("</strong></div>");

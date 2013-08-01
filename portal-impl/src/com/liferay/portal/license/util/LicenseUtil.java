@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
@@ -539,10 +540,10 @@ public class LicenseUtil {
 		jsonObject.put("liferayVersion", ReleaseInfo.getBuildNumber());
 
 		if (Validator.isNull(productEntryName)) {
-			jsonObject.put("cmd", "QUERY");
+			jsonObject.put(Constants.CMD, "QUERY");
 		}
 		else {
-			jsonObject.put("cmd", "REGISTER");
+			jsonObject.put(Constants.CMD, "REGISTER");
 
 			if (productEntryName.startsWith("basic")) {
 				jsonObject.put("productEntryName", "basic");
@@ -717,8 +718,7 @@ public class LicenseUtil {
 	private static final String _PROXY_USER_NAME = GetterUtil.getString(
 		PropsUtil.get("license.proxy.username"));
 
-	private static Log _log = LogFactoryUtil.getLog(
-		DefaultLicenseManagerImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(LicenseUtil.class);
 
 	private static String _encryptedSymmetricKey;
 	private static MethodHandler _getServerInfoMethodHandler =

@@ -14,6 +14,8 @@
 
 package com.liferay.portal.tools.sourceformatter;
 
+import com.liferay.portal.kernel.util.NumericalStringComparator;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		String name1 = javaTerm1.getName();
 		String name2 = javaTerm2.getName();
 
-		if (type1 == SourceFormatter._TYPE_VARIABLE_PRIVATE_STATIC) {
+		if (type1 == JavaSourceProcessor.TYPE_VARIABLE_PRIVATE_STATIC) {
 			if (name2.equals("_log")) {
 				return 1;
 			}
@@ -49,11 +51,17 @@ public class JavaTermComparator implements Comparator<JavaTerm> {
 		}
 
 		if (name1.compareToIgnoreCase(name2) != 0) {
-			return name1.compareToIgnoreCase(name2);
+			NumericalStringComparator numericalStringComparator =
+				new NumericalStringComparator(true, false);
+
+			return numericalStringComparator.compare(name1, name2);
 		}
 
 		if (name1.compareTo(name2) != 0) {
-			return -name1.compareTo(name2);
+			NumericalStringComparator numericalStringComparator =
+				new NumericalStringComparator(true, true);
+
+			return -numericalStringComparator.compare(name1, name2);
 		}
 
 		return _compareParameterTypes(javaTerm1, javaTerm2);

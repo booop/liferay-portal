@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -44,6 +43,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.Address;
 import com.liferay.portal.model.AttachedModel;
 import com.liferay.portal.model.AuditedModel;
@@ -580,10 +580,8 @@ public abstract class BaseIndexer implements Indexer {
 
 		document.addNumber(Field.VIEW_COUNT, assetEntry.getViewCount());
 
-		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
-			assetEntry.getTitle(), true);
-
-		document.addLocalizedKeyword("localized_title", titleMap, true);
+		document.addLocalizedKeyword(
+			"localized_title", assetEntry.getTitleMap(), true);
 	}
 
 	/**
@@ -1035,6 +1033,13 @@ public abstract class BaseIndexer implements Indexer {
 		multiValueFacet.setFieldName(Field.USER_ID);
 		multiValueFacet.setStatic(true);
 
+		long userId = GetterUtil.getLong(
+			searchContext.getAttribute(Field.USER_ID));
+
+		if (userId > 0) {
+			multiValueFacet.setValues(new long[] {userId});
+		}
+
 		searchContext.addFacet(multiValueFacet);
 	}
 
@@ -1058,6 +1063,28 @@ public abstract class BaseIndexer implements Indexer {
 		}
 
 		document.addKeyword(Field.STAGING_GROUP, stagingGroup);
+	}
+
+	protected void addStatus(
+			BooleanQuery contextQuery, SearchContext searchContext)
+		throws Exception {
+
+		int status = GetterUtil.getInteger(
+			searchContext.getAttribute(Field.STATUS),
+			WorkflowConstants.STATUS_APPROVED);
+
+		if (status != WorkflowConstants.STATUS_ANY) {
+			contextQuery.addRequiredTerm(Field.STATUS, status);
+		}
+		else {
+			BooleanQuery statusQuery = BooleanQueryFactoryUtil.create(
+				searchContext);
+
+			statusQuery.addTerm(
+				Field.STATUS, WorkflowConstants.STATUS_IN_TRASH);
+
+			contextQuery.add(statusQuery, BooleanClauseOccur.MUST_NOT);
+		}
 	}
 
 	protected void addTrashFields(
@@ -1504,7 +1531,7 @@ public abstract class BaseIndexer implements Indexer {
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId(long)}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId(long)}
 	 */
 	protected long getParentGroupId(long groupId) {
 		return getSiteGroupId(groupId);

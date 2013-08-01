@@ -194,7 +194,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 			{ "categoryId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_ASSETENTRIES_ASSETCATEGORIES_SQL_CREATE =
-		"create table AssetEntries_AssetCategories (entryId LONG not null,categoryId LONG not null,primary key (entryId, categoryId))";
+		"create table AssetEntries_AssetCategories (categoryId LONG not null,entryId LONG not null,primary key (categoryId, entryId))";
 	public static final boolean FINDER_CACHE_ENABLED_ASSETENTRIES_ASSETCATEGORIES =
 		GetterUtil.getBoolean(com.liferay.portal.util.PropsUtil.get(
 				"value.object.finder.cache.enabled.AssetEntries_AssetCategories"),
@@ -437,8 +437,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getEntryId() {
 		return _entryId;
 	}
@@ -448,8 +448,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_entryId = entryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -471,8 +471,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -494,8 +494,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -515,8 +515,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -531,8 +531,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -542,8 +542,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -573,8 +573,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -596,8 +596,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -619,8 +619,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getClassUuid() {
 		if (_classUuid == null) {
 			return StringPool.BLANK;
@@ -645,8 +645,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return GetterUtil.getString(_originalClassUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassTypeId() {
 		return _classTypeId;
 	}
@@ -656,8 +656,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_classTypeId = classTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getVisible() {
 		return _visible;
 	}
@@ -684,8 +684,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalVisible;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStartDate() {
 		return _startDate;
 	}
@@ -695,8 +695,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_startDate = startDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getEndDate() {
 		return _endDate;
 	}
@@ -706,8 +706,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_endDate = endDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getPublishDate() {
 		return _publishDate;
 	}
@@ -727,8 +727,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalPublishDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getExpirationDate() {
 		return _expirationDate;
 	}
@@ -748,8 +748,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return _originalExpirationDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getMimeType() {
 		if (_mimeType == null) {
 			return StringPool.BLANK;
@@ -764,8 +764,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_mimeType = mimeType;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getTitle() {
 		if (_title == null) {
 			return StringPool.BLANK;
@@ -825,7 +825,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setTitle(String title, Locale locale) {
-		setTitle(title, locale, LocaleUtil.getDefault());
+		setTitle(title, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -850,7 +850,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setTitleMap(Map<Locale, String> titleMap) {
-		setTitleMap(titleMap, LocaleUtil.getDefault());
+		setTitleMap(titleMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -863,8 +863,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 				"Title", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -924,7 +924,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getDefault());
+		setDescription(description, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -951,7 +951,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
+		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -966,8 +966,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 				LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSummary() {
 		if (_summary == null) {
 			return StringPool.BLANK;
@@ -1027,7 +1027,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setSummary(String summary, Locale locale) {
-		setSummary(summary, locale, LocaleUtil.getDefault());
+		setSummary(summary, locale, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1052,7 +1052,7 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 
 	@Override
 	public void setSummaryMap(Map<Locale, String> summaryMap) {
-		setSummaryMap(summaryMap, LocaleUtil.getDefault());
+		setSummaryMap(summaryMap, LocaleUtil.getSiteDefault());
 	}
 
 	@Override
@@ -1066,8 +1066,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 				getSummary(), "Summary", LocaleUtil.toLanguageId(defaultLocale)));
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUrl() {
 		if (_url == null) {
 			return StringPool.BLANK;
@@ -1082,8 +1082,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_url = url;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getLayoutUuid() {
 		if (_layoutUuid == null) {
 			return StringPool.BLANK;
@@ -1108,8 +1108,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		return GetterUtil.getString(_originalLayoutUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getHeight() {
 		return _height;
 	}
@@ -1119,8 +1119,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_height = height;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getWidth() {
 		return _width;
 	}
@@ -1130,8 +1130,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_width = width;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public double getPriority() {
 		return _priority;
 	}
@@ -1141,8 +1141,8 @@ public class AssetEntryModelImpl extends BaseModelImpl<AssetEntry>
 		_priority = priority;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getViewCount() {
 		return _viewCount;
 	}

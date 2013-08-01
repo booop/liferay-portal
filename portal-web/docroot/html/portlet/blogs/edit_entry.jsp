@@ -32,19 +32,22 @@ boolean allowTrackbacks = PropsValues.BLOGS_TRACKBACK_ENABLED && BeanParamUtil.g
 boolean smallImage = BeanParamUtil.getBoolean(entry, request, "smallImage");
 
 boolean preview = ParamUtil.getBoolean(request, "preview");
+boolean showHeader = ParamUtil.getBoolean(request, "showHeader", true);
 %>
 
-<liferay-ui:header
-	backURL="<%= backURL %>"
-	localizeTitle="<%= (entry == null) %>"
-	title='<%= (entry == null) ? "new-blog-entry" : entry.getTitle() %>'
-/>
+<c:if test="<%= showHeader %>">
+	<liferay-ui:header
+		backURL="<%= backURL %>"
+		localizeTitle="<%= (entry == null) %>"
+		title='<%= (entry == null) ? "new-blog-entry" : entry.getTitle() %>'
+	/>
+</c:if>
 
 <portlet:actionURL var="editEntryURL">
 	<portlet:param name="struts_action" value="/blogs/edit_entry" />
 </portlet:actionURL>
 
-<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault();" %>'>
+<aui:form action="<%= editEntryURL %>" method="post" name="fm" onSubmit="event.preventDefault();">
 	<aui:input name="<%= Constants.CMD %>" type="hidden" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
@@ -72,7 +75,7 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 	</c:if>
 
 	<aui:fieldset>
-		<aui:input name="title" />
+		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="title" />
 
 		<aui:input name="displayDate" />
 
@@ -444,10 +447,6 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 		},
 		['aui-io']
 	);
-
-	<c:if test="<%= windowState.equals(WindowState.MAXIMIZED) %>">
-		Liferay.Util.focusFormField(document.<portlet:namespace />fm.<portlet:namespace />title);
-	</c:if>
 </aui:script>
 
 <aui:script use="aui-base">
@@ -514,7 +513,7 @@ boolean preview = ParamUtil.getBoolean(request, "preview");
 
 					if (expanded) {
 						types.each(
-							function (item, index, collection) {
+							function(item, index, collection) {
 								if (item.get('checked')) {
 									values.item(index).set('disabled', false);
 								}

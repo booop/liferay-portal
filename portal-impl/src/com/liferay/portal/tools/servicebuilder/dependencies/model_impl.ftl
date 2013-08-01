@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -427,14 +428,13 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			}
 		</#if>
 
-		@Override
-
 		<#if column.jsonEnabled>
 			@JSON
 		<#elseif entity.jsonEnabled>
 			@JSON(include = false)
 		</#if>
 
+		@Override
 		public ${column.type} get${column.methodName}() {
 			<#if column.type == "String" && column.isConvertNull()>
 				if (_${column.name} == null) {
@@ -564,7 +564,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 		<#if column.localized>
 			@Override
 			public void set${column.methodName}(String ${column.name}, Locale locale) {
-				set${column.methodName}(${column.name}, locale, LocaleUtil.getDefault());
+				<#if entity.isGroupedModel()>
+					set${column.methodName}(${column.name}, locale, LocaleUtil.getSiteDefault());
+				<#else>
+					set${column.methodName}(${column.name}, locale, LocaleUtil.getDefault());
+				</#if>
 			}
 
 			@Override
@@ -587,7 +591,11 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 
 			@Override
 			public void set${column.methodName}Map(Map<Locale, String> ${column.name}Map) {
-				set${column.methodName}Map(${column.name}Map, LocaleUtil.getDefault());
+				<#if entity.isGroupedModel()>
+					set${column.methodName}Map(${column.name}Map, LocaleUtil.getSiteDefault());
+				<#else>
+					set${column.methodName}Map(${column.name}Map, LocaleUtil.getDefault());
+				</#if>
 			}
 
 			@Override
@@ -701,6 +709,17 @@ public class ${entity.name}ModelImpl extends BaseModelImpl<${entity.name}> imple
 			public void setParentContainerModelId(long parentContainerModelId) {
 			}
 		</#if>
+	</#if>
+
+	<#if entity.isStagedModel()>
+		@Override
+		public StagedModelType getStagedModelType() {
+			<#if entity.isTypedModel()>
+				return new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()), getClassNameId());
+			<#else>
+				return new StagedModelType(PortalUtil.getClassNameId(${entity.name}.class.getName()));
+			</#if>
+		}
 	</#if>
 
 	<#if entity.isWorkflowEnabled()>

@@ -16,10 +16,10 @@ package com.liferay.portlet.dynamicdatalists.lar;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.dynamicdatalists.model.DDLRecordSet;
 import com.liferay.portlet.dynamicdatalists.service.DDLRecordSetLocalServiceUtil;
@@ -39,8 +39,12 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 	public DDLPortletDataHandler() {
 		setDataLocalized(true);
+		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(DDLRecordSet.class));
 		setExportControls(
-			new PortletDataHandlerBoolean(NAMESPACE, "record-sets"));
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "record-sets", true, false, null,
+				DDLRecordSet.class.getName()));
 		setImportControls(getExportControls());
 	}
 
@@ -114,17 +118,14 @@ public class DDLPortletDataHandler extends BasePortletDataHandler {
 
 	@Override
 	protected void doPrepareManifestSummary(
-			PortletDataContext portletDataContext)
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences)
 		throws Exception {
-
-		ManifestSummary manifestSummary =
-			portletDataContext.getManifestSummary();
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			new DDLRecordSetExportActionableDynamicQuery(portletDataContext);
 
-		manifestSummary.addModelCount(
-			DDLRecordSet.class, actionableDynamicQuery.performCount());
+		actionableDynamicQuery.performCount();
 	}
 
 }

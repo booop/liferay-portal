@@ -26,8 +26,11 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.social.model.SocialActivity;
+import com.liferay.portlet.social.model.SocialActivityConstants;
 import com.liferay.portlet.social.model.SocialActivityDefinition;
 import com.liferay.portlet.social.service.base.SocialActivityLocalServiceBaseImpl;
+import com.liferay.portlet.social.util.SocialActivityHierarchyEntry;
+import com.liferay.portlet.social.util.SocialActivityHierarchyEntryThreadLocal;
 
 import java.util.Date;
 import java.util.List;
@@ -125,6 +128,16 @@ public class SocialActivityLocalServiceImpl
 		activity.setMirrorActivityId(0);
 		activity.setClassNameId(classNameId);
 		activity.setClassPK(classPK);
+
+		SocialActivityHierarchyEntry activityHierarchyEntry =
+			SocialActivityHierarchyEntryThreadLocal.peek();
+
+		if (activityHierarchyEntry != null) {
+			activity.setParentClassNameId(
+				activityHierarchyEntry.getClassNameId());
+			activity.setParentClassPK(activityHierarchyEntry.getClassPK());
+		}
+
 		activity.setType(type);
 		activity.setExtraData(extraData);
 		activity.setReceiverUserId(receiverUserId);
@@ -145,6 +158,14 @@ public class SocialActivityLocalServiceImpl
 			mirrorActivity.setCreateDate(createDate.getTime());
 			mirrorActivity.setClassNameId(classNameId);
 			mirrorActivity.setClassPK(classPK);
+
+			if (activityHierarchyEntry != null) {
+				mirrorActivity.setParentClassNameId(
+					activityHierarchyEntry.getClassNameId());
+				mirrorActivity.setParentClassPK(
+					activityHierarchyEntry.getClassPK());
+			}
+
 			mirrorActivity.setType(type);
 			mirrorActivity.setExtraData(extraData);
 			mirrorActivity.setReceiverUserId(user.getUserId());
@@ -219,15 +240,7 @@ public class SocialActivityLocalServiceImpl
 				"Activity and mirror activity must not have primary keys set");
 		}
 
-		SocialActivityDefinition activityDefinition =
-			socialActivitySettingLocalService.getActivityDefinition(
-				activity.getGroupId(), activity.getClassName(),
-				activity.getType());
-
-		if (((activityDefinition == null) && (activity.getType() < 10000)) ||
-			((activityDefinition != null) &&
-			 activityDefinition.isLogActivity())) {
-
+		if (isLogActivity(activity)) {
 			long activityId = counterLocalService.increment(
 				SocialActivity.class.getName());
 
@@ -338,14 +351,23 @@ public class SocialActivityLocalServiceImpl
 	/**
 	 * Removes stored activities for the asset.
 	 *
-	 * @param      assetEntry the asset from which to remove stored activities
-	 * @throws     PortalException if a portal exception occurred
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
+	 * @param  assetEntry the asset from which to remove stored activities
+	 * @throws PortalException if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteActivities(AssetEntry assetEntry)
 		throws PortalException, SystemException {
+
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				assetEntry.getClassNameId(), assetEntry.getClassPK());
+		}
+
+		socialActivityPersistence.removeByC_C(
+			assetEntry.getClassNameId(), assetEntry.getClassPK());
+
+		socialActivityCounterLocalService.deleteActivityCounters(assetEntry);
 	}
 
 	@Override
@@ -367,41 +389,69 @@ public class SocialActivityLocalServiceImpl
 	 * Removes stored activities for the asset identified by the class name and
 	 * class primary key.
 	 *
-	 * @param      className the target asset's class name
-	 * @param      classPK the primary key of the target asset
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
+	 * @param  className the target asset's class name
+	 * @param  classPK the primary key of the target asset
+	 * @throws PortalException if the user's activity counters could not be
+	 *         deleted
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void deleteActivities(String className, long classPK)
 		throws PortalException, SystemException {
+
+		long classNameId = PortalUtil.getClassNameId(className);
+
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				classNameId, classPK);
+		}
+
+		socialActivityPersistence.removeByC_C(classNameId, classPK);
 	}
 
 	/**
 	 * Removes the stored activity from the database.
 	 *
-	 * @param      activityId the primary key of the stored activity
-	 * @throws     PortalException if the activity could not be found
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
+	 * @param  activityId the primary key of the stored activity
+	 * @throws PortalException if the activity could not be found
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteActivity(long activityId)
 		throws PortalException, SystemException {
+
+		SocialActivity activity = socialActivityPersistence.findByPrimaryKey(
+			activityId);
+
+		deleteActivity(activity);
 	}
 
 	/**
 	 * Removes the stored activity and its mirror activity from the database.
 	 *
-	 * @param      activity the activity to be removed
-	 * @throws     SystemException if a system exception occurred
-	 * @deprecated As of 6.2.0, replaced by {@link #deleteActivities(long)}
+	 * @param  activity the activity to be removed
+	 * @throws PortalException if the user's activity counters could not be
+	 *         deleted or if a portal exception occurred
+	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("unused")
 	public void deleteActivity(SocialActivity activity)
 		throws PortalException, SystemException {
+
+		if (PropsValues.SOCIAL_ACTIVITY_SETS_ENABLED) {
+			socialActivitySetLocalService.decrementActivityCount(
+				activity.getActivitySetId());
+		}
+
+		socialActivityPersistence.remove(activity);
+
+		SocialActivity mirrorActivity =
+			socialActivityPersistence.fetchByMirrorActivityId(
+				activity.getActivityId());
+
+		if (mirrorActivity != null) {
+			socialActivityPersistence.remove(mirrorActivity);
+		}
 	}
 
 	/**
@@ -1138,6 +1188,33 @@ public class SocialActivityLocalServiceImpl
 		throws SystemException {
 
 		return socialActivityFinder.countByUserOrganizations(userId);
+	}
+
+	protected boolean isLogActivity(SocialActivity activity)
+		throws SystemException {
+
+		if (activity.getType() == SocialActivityConstants.TYPE_DELETE) {
+			if (activity.getParentClassPK() == 0) {
+				return true;
+			}
+
+			return false;
+		}
+
+		SocialActivityDefinition activityDefinition =
+			socialActivitySettingLocalService.getActivityDefinition(
+				activity.getGroupId(), activity.getClassName(),
+				activity.getType());
+
+		if (activityDefinition != null) {
+			return activityDefinition.isLogActivity();
+		}
+
+		if (activity.getType() < SocialActivityConstants.TYPE_VIEW) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

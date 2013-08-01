@@ -307,7 +307,7 @@ for (int i = 0; i < results.size(); i++) {
 
 	// Status
 
-	row.addText(LanguageUtil.get(pageContext, WorkflowConstants.toLabel(curWikiPage.getStatus())), rowURL);
+	row.addText(LanguageUtil.get(pageContext, WorkflowConstants.getStatusLabel(curWikiPage.getStatus())), rowURL);
 
 	// Revision
 
@@ -336,7 +336,7 @@ for (int i = 0; i < results.size(); i++) {
 	// Date
 
 	if (!curWikiPage.isNew()) {
-		row.addText(dateFormatDateTime.format(curWikiPage.getCreateDate()), rowURL);
+		row.addDate(curWikiPage.getCreateDate(), rowURL);
 	}
 	else {
 		row.addText(StringPool.BLANK);
@@ -385,6 +385,7 @@ for (int i = 0; i < results.size(); i++) {
 	%>
 
 	<aui:form action="<%= compareVersionsURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "compare();" %>'>
+		<aui:input name="tabs3" type="hidden" value="versions" />
 		<aui:input name="backURL" type="hidden" value="<%= currentURL %>" />
 		<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
 		<aui:input name="title" type="hidden" value="<%= wikiPage.getTitle() %>" />

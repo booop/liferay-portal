@@ -25,9 +25,10 @@
 
 		<liferay-ui:ddm-template-selector
 			classNameId="<%= PortalUtil.getClassNameId(templateHandler.getClassName()) %>"
+			displayStyle="<%= displayStyle %>"
+			displayStyleGroupId="<%= displayStyleGroupId %>"
 			displayStyles="<%= Arrays.asList(PropsValues.ASSET_PUBLISHER_DISPLAY_STYLES) %>"
 			label="display-template"
-			preferenceValue="<%= displayStyle %>"
 			refreshURL="<%= configurationRenderURL.toString() %>"
 		/>
 	</div>
@@ -46,7 +47,7 @@
 
 	<aui:select cssClass="hidden-field asset-link-behavior" name="preferences--assetLinkBehavior--">
 		<aui:option label="show-full-content" selected='<%= assetLinkBehavior.equals("showFullContent") %>' value="showFullContent" />
-		<aui:option label="view-in-a-specific-portlet" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
+		<aui:option label="view-in-context" selected='<%= assetLinkBehavior.equals("viewInPortlet") %>' value="viewInPortlet" />
 	</aui:select>
 
 	<aui:select helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--">
@@ -207,7 +208,7 @@
 		var selectDisplayStyle = A.one('#<portlet:namespace />displayStyle');
 
 		if (hiddenFields) {
-			hiddenFields.hide();
+			hiddenFields.get('parentNode').hide();
 		}
 
 		if (selectDisplayStyle) {
@@ -218,11 +219,11 @@
 				var showContextLink = A.one('.show-context-link');
 
 				if (showAssetTitle) {
-					showAssetTitle.show();
+					showAssetTitle.get('parentNode').show();
 				}
 
 				if (showContextLink) {
-					showContextLink.show();
+					showContextLink.get('parentNode').show();
 				}
 			}
 			else {
@@ -230,12 +231,12 @@
 					var abstractLength = A.one('.abstract-length');
 
 					if (abstractLength) {
-						abstractLength.show();
+						abstractLength.get('parentNode').show();
 					}
 				}
 
 				if (assetLinkBehavior) {
-					assetLinkBehavior.show();
+					assetLinkBehavior.get('parentNode').show();
 				}
 			}
 		}

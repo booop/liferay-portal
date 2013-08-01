@@ -17,7 +17,7 @@
 <%@ include file="/html/taglib/aui/nav_item/init.jsp" %>
 
 <li class="<%= cssClass %><%= selected ? " active" : StringPool.BLANK %>" id="<%= id %>" <%= AUIUtil.buildData(data) %> <%= InlineUtil.buildDynamicAttributes(dynamicAttributes) %>>
-	<c:if test="<%= Validator.isNotNull(label) %>">
+	<c:if test="<%= Validator.isNotNull(iconClass) || Validator.isNotNull(label) %>">
 		<c:if test="<%= Validator.isNotNull(href) %>">
 			<a class="<%= anchorCssClass %>" <%= AUIUtil.buildData(anchorData) %> href="<%= href %>" id="<%= anchorId %>" title="<liferay-ui:message key="<%= title %>" />">
 		</c:if>
@@ -25,10 +25,12 @@
 					<i class="<%= iconClass %>"></i>
 				</c:if>
 
-				<liferay-ui:message key="<%= label %>" />
+				<span class="nav-item-label">
+					<liferay-ui:message key="<%= label %>" />
+				</span>
 
 				<c:if test="<%= dropdown %>">
-					<b class="caret"></b>
+					<i class="icon-caret-down"></i>
 				</c:if>
 		<c:if test="<%= Validator.isNotNull(href) %>">
 			</a>
@@ -36,16 +38,42 @@
 	</c:if>
 
 	<c:if test="<%= dropdown %>">
-		<aui:script use="aui-base">
+		<aui:script use="aui-base,event-outside">
 			A.one('#<%= id %>').on(
 				'click',
 				function(event) {
-					event.currentTarget.toggleClass('open');
+					var currentTarget = event.currentTarget;
+
+					currentTarget.toggleClass('open');
+
+					var menuOpen = currentTarget.hasClass('open');
+
+					var handle = Liferay.Data['<%= id %>Handle'];
+
+					if (menuOpen && !handle) {
+						handle = currentTarget.on(
+							'clickoutside',
+							function(event) {
+								Liferay.Data['<%= id %>Handle'] = null;
+
+								handle.detach();
+
+								currentTarget.removeClass('open');
+							}
+						);
+					}
+					else if (handle) {
+						handle.detach();
+
+						handle = null;
+					}
+
+					Liferay.Data['<%= id %>Handle'] = handle;
 				}
 			);
 		</aui:script>
 
 		<c:if test="<%= wrapDropDownMenu %>">
-			<ul class="dropdown-menu">
+			<ul class='dropdown-menu <%= LanguageUtil.get(locale, "lang.dir").equals("rtl") ? "pull-right" : StringPool.BLANK %>'>
 		</c:if>
 	</c:if>

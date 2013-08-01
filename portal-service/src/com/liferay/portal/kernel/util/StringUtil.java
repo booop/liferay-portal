@@ -153,6 +153,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * appendParentheticalSuffix("file", 0) returns "file (0)"
@@ -160,6 +161,7 @@ public class StringUtil {
 	 * appendParentheticalSuffix("file (0)", 1) returns "file (1)"
 	 * appendParentheticalSuffix("file (0)", 2) returns "file (0) (2)"
 	 * </code>
+	 * </pre>
 	 * </p>
 	 *
 	 * @param  s the original string
@@ -188,11 +190,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * appendParentheticalSuffix("Java", "EE") returns "Java (EE)"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  suffix the suffix to be appended
@@ -243,12 +247,14 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * contains("one,two,three", "two") returns true
 	 * contains("one,two,three", "thr") returns false
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
@@ -267,12 +273,14 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * contains("three...two...one", "two", "...") returns true
 	 * contains("three...two...one", "thr", "...") returns false
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string in which to search
 	 * @param  text the text to search for in the string
@@ -654,6 +662,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *) returns -1
@@ -664,6 +673,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ['m','n']) returns -1
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -693,6 +703,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *, *) returns -1
@@ -701,6 +712,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ['a','c'], 3) returns 6
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -733,6 +745,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *, *, *) returns -1
@@ -741,6 +754,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ['a','c'], 3, 7) returns 6
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -803,6 +817,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *) returns -1
@@ -815,6 +830,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ["mn",""]) returns 0
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -846,6 +862,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *, *) returns -1
@@ -858,6 +875,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ["mn",""], 3) returns 3
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -892,6 +910,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * indexOfAny(null, *, *, *) returns -1
@@ -904,6 +923,7 @@ public class StringUtil {
 	 * indexOfAny("zzabyycdxx", ["mn",""], 3, *) returns 3
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -1000,6 +1020,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null, *) returns -1
@@ -1010,6 +1031,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ['m','n']) returns -1
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -1039,6 +1061,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null, *, *) returns -1
@@ -1048,6 +1071,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ['m','n'], *) returns -1
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -1080,6 +1104,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null</code>, *, *, *) returns -1
@@ -1089,6 +1114,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ['m','n'], *, *) returns -1
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  chars the characters to search for (optionally <code>null</code>)
@@ -1151,6 +1177,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null</code>, *) returns -1
@@ -1163,6 +1190,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ["mn",""]) returns 10
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -1194,6 +1222,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null, *, *) returns -1
@@ -1206,6 +1235,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ["mn",""], 5) returns 5
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -1240,6 +1270,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * lastIndexOfAny(null, *, *, *) returns -1
@@ -1251,6 +1282,7 @@ public class StringUtil {
 	 * lastIndexOfAny("zzabyycdxx", ["mn",""], 2, 5) returns 5
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to search (optionally <code>null</code>)
 	 * @param  texts the strings to search for (optionally <code>null</code>)
@@ -1762,11 +1794,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * quote("Hello, World!") returns "'Hello, World!'"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to enclose in apostrophes
 	 * @return the string enclosed by apostrophes, or <code>null</code> if the
@@ -1783,11 +1817,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * quote("PATH", '%') returns "%PATH%"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to enclose in quotes
 	 * @param  quote the character to insert to insert to the beginning of and
@@ -1810,11 +1846,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * quote("WARNING", "!!!") returns "!!!WARNING!!!"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to enclose in quotes
 	 * @param  quote the quote string to insert to insert to the beginning of
@@ -1866,11 +1904,16 @@ public class StringUtil {
 						"Unable to open resource at " + url.toString());
 				}
 
-				String s = read(is);
+				try {
+					String s = read(is);
 
-				if (s != null) {
-					sb.append(s);
-					sb.append(StringPool.NEW_LINE);
+					if (s != null) {
+						sb.append(s);
+						sb.append(StringPool.NEW_LINE);
+					}
+				}
+				finally {
+					StreamUtil.cleanUp(is);
 				}
 			}
 
@@ -1884,9 +1927,14 @@ public class StringUtil {
 					"Unable to open resource in class loader " + name);
 			}
 
-			String s = read(is);
+			try {
+				String s = read(is);
 
-			return s;
+				return s;
+			}
+			finally {
+				StreamUtil.cleanUp(is);
+			}
 		}
 	}
 
@@ -1939,6 +1987,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * remove("red,blue,green,yellow", "blue") returns "red,green,yellow,"
@@ -1946,6 +1995,7 @@ public class StringUtil {
 	 * remove("blue,", "blue") returns ""
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string representing the list of comma delimited strings
 	 * @param  remove the string to remove
@@ -1971,6 +2021,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * remove("red;blue;green;yellow", "blue", ";") returns "red;green;yellow;"
@@ -1978,6 +2029,7 @@ public class StringUtil {
 	 * remove("blue;", "blue", ";") returns ""
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string representing the list of delimited strings
 	 * @param  remove the string to remove
@@ -2203,6 +2255,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * replace("redorangeyellow", {"red", "orange", "yellow"}, {"RED","ORANGE", "YELLOW"}, false) returns "REDORANGEYELLOW"
@@ -2213,6 +2266,7 @@ public class StringUtil {
 	 * replace("redorange.yellow", {"red", "orange", "yellow"}, {"RED","ORANGE", * "YELLOW"}, true) returns "redorange.YELLOW"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  oldSubs the strings to be searched for and replaced in the
@@ -2585,11 +2639,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * safePath("http://www.liferay.com") returns "http:/www.liferay.com"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  path the original string
 	 * @return a string representing the original string with all double slashes
@@ -2613,6 +2669,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * shorten("12345678901234567890xyz") returns "12345678901234567..."
@@ -2622,6 +2679,7 @@ public class StringUtil {
 	 * shorten(" 2345678901234567890") returns " 2345678901234567890"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @return a string representing the original string shortened to 20
@@ -2646,6 +2704,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * shorten("123456789", 8) returns "12345..."
@@ -2655,6 +2714,7 @@ public class StringUtil {
 	 * shorten(" 1234567", 8) returns " 1234567"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  length the number of characters to limit from the original string
@@ -2680,6 +2740,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * shorten("12345678901234", 13, "... etc.") returns "12345... etc."
@@ -2689,6 +2750,7 @@ public class StringUtil {
 	 * shorten(" 123456789012", 13, "... etc.") returns " 123456789012"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  length the number of characters to limit from the original string
@@ -2742,6 +2804,7 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * shorten("12345678901234567890xyz", "... etc.") returns "123456789012... etc."
@@ -2751,6 +2814,7 @@ public class StringUtil {
 	 * shorten(" 2345678901234567890", "... etc.") returns " 2345678901234567890"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  suffix the suffix to append
@@ -2768,12 +2832,14 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * split("Alice,Bob,Charlie") returns {"Alice", "Bob", "Charlie"}
 	 * split("Alice, Bob, Charlie") returns {"Alice", " Bob", " Charlie"}
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to split
 	 * @return the array of strings resulting from splitting string
@@ -2806,11 +2872,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * splitLines("First;Second;Third", ';') returns {"First","Second","Third"}
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to split
 	 * @param  delimiter the delimiter
@@ -2938,11 +3006,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * splitLines("oneandtwoandthreeandfour", "and") returns {"one","two","three","four"}
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to split
 	 * @param  delimiter the delimiter
@@ -3181,11 +3251,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * splitLines("Red\rBlue\nGreen") returns {"Red","Blue","Green"}
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string to split
 	 * @return the array of strings resulting from splitting string
@@ -3323,11 +3395,13 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * strip("Mississipi", 'i') returns "Mssssp"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the string from which to strip all occurrences the character
 	 * @param  remove the character to strip from the string
@@ -3373,11 +3447,13 @@ public class StringUtil {
 	 * Example:
 	 * <p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * stripBetween("One small step for man, one giant leap for mankind", "step", "giant ") returns "One small leap for mankind"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the from which to strip a substring
 	 * @param  begin the beginning characters of the substring to be removed
@@ -3426,6 +3502,7 @@ public class StringUtil {
 	 * Example:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * toCharCode("a") returns "97"
@@ -3433,6 +3510,7 @@ public class StringUtil {
 	 * toCharCode("c") returns "99"
 	 * toCharCode("What's for lunch?") returns "87104971163911532102111114321081171109910463"
 	 * </code>
+	 * </pre>
 	 * </p>
 	 *
 	 * @param  s the string whose character codes are to be represented
@@ -3552,12 +3630,14 @@ public class StringUtil {
 	 * Examples:
 	 * </p>
 	 *
+	 * <p>
 	 * <pre>
 	 * <code>
 	 * trim(" \tHey\t ", '\t') returns "\tHey\t"
 	 * trim(" \t Hey \t ", '\t') returns "\t Hey \t"
 	 * </code>
 	 * </pre>
+	 * </p>
 	 *
 	 * @param  s the original string
 	 * @param  c the whitespace character to limit trimming
@@ -3902,6 +3982,126 @@ public class StringUtil {
 	 */
 	public static String valueOf(Object obj) {
 		return String.valueOf(obj);
+	}
+
+	public static boolean wildcardMatches(
+		String s, String wildcard, char singleWildcardCharacter,
+		char multipleWildcardCharacter, char escapeWildcardCharacter,
+		boolean caseSensitive) {
+
+		if (!caseSensitive) {
+			s = s.toLowerCase();
+			wildcard = wildcard.toLowerCase();
+		}
+
+		// Update the wildcard, single whildcard character, and multiple
+		// wildcard character so that they no longer have escaped wildcard
+		// characters
+
+		int index = wildcard.indexOf(escapeWildcardCharacter);
+
+		if (index != -1) {
+
+			// Search for safe wildcard replacement
+
+			char newSingleWildcardCharacter = 0;
+
+			while (wildcard.indexOf(newSingleWildcardCharacter) != -1) {
+				newSingleWildcardCharacter++;
+			}
+
+			char newMultipleWildcardCharacter =
+				(char)(newSingleWildcardCharacter + 1);
+
+			while (wildcard.indexOf(newMultipleWildcardCharacter) != -1) {
+				newMultipleWildcardCharacter++;
+			}
+
+			// Purify
+
+			StringBuilder sb = new StringBuilder(wildcard);
+
+			for (int i = 0; i < sb.length(); i++) {
+				char c = sb.charAt(i);
+
+				if (c == escapeWildcardCharacter) {
+					sb.deleteCharAt(i);
+				}
+				else if (c == singleWildcardCharacter) {
+					sb.setCharAt(i, newSingleWildcardCharacter);
+				}
+				else if (c == multipleWildcardCharacter) {
+					sb.setCharAt(i, newMultipleWildcardCharacter);
+				}
+			}
+
+			wildcard = sb.toString();
+
+			singleWildcardCharacter = newSingleWildcardCharacter;
+			multipleWildcardCharacter = newMultipleWildcardCharacter;
+		}
+
+		// Align head
+
+		for (index = 0; index < s.length(); index++) {
+			char c = wildcard.charAt(index);
+
+			if (c == multipleWildcardCharacter) {
+				break;
+			}
+
+			if ((s.charAt(index) != c) && (c != singleWildcardCharacter)) {
+				return false;
+			}
+		}
+
+		// Match body
+
+		int sIndex = index;
+		int wildcardIndex = index;
+
+		int matchPoint = 0;
+		int comparePoint = 0;
+
+		while (sIndex < s.length()) {
+			char c = wildcard.charAt(wildcardIndex);
+
+			if (c == multipleWildcardCharacter) {
+				if (++wildcardIndex == wildcard.length()) {
+					return true;
+				}
+
+				matchPoint = wildcardIndex;
+				comparePoint = sIndex + 1;
+			}
+			else if ((c == s.charAt(sIndex)) ||
+					 (c == singleWildcardCharacter)) {
+
+				sIndex++;
+				wildcardIndex++;
+			}
+			else {
+				wildcardIndex = matchPoint;
+				sIndex = comparePoint++;
+			}
+		}
+
+		// Match tail
+
+		while (wildcardIndex < wildcard.length()) {
+			if (wildcard.charAt(wildcardIndex) != multipleWildcardCharacter) {
+				break;
+			}
+
+			wildcardIndex++;
+		}
+
+		if (wildcardIndex == wildcard.length()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public static String wrap(String text) {

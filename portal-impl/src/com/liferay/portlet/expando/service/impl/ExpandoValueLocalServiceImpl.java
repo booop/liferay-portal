@@ -38,6 +38,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import jodd.typeconverter.TypeConverterManager;
+
 /**
  * @author Raymond Augé
  * @author Brian Wing Shun Chan
@@ -425,6 +427,15 @@ public class ExpandoValueLocalServiceImpl
 
 		int type = column.getType();
 
+		Class<?> clazz = data.getClass();
+
+		if ((type != ExpandoColumnConstants.STRING) &&
+			clazz.equals(String.class)) {
+
+			data = ExpandoColumnConstants.getSerializable(
+				type, data.toString());
+		}
+
 		if (type == ExpandoColumnConstants.BOOLEAN) {
 			return expandoValueLocalService.addValue(
 				companyId, className, tableName, columnName, classPK,
@@ -436,14 +447,16 @@ public class ExpandoValueLocalServiceImpl
 				(boolean[])data);
 		}
 		else if (type == ExpandoColumnConstants.DATE) {
+			Date date = TypeConverterManager.convertType(data, Date.class);
+
 			return expandoValueLocalService.addValue(
-				companyId, className, tableName, columnName, classPK,
-				(Date)data);
+				companyId, className, tableName, columnName, classPK, date);
 		}
 		else if (type == ExpandoColumnConstants.DATE_ARRAY) {
+			Date[] dates = TypeConverterManager.convertType(data, Date[].class);
+
 			return expandoValueLocalService.addValue(
-				companyId, className, tableName, columnName, classPK,
-				(Date[])data);
+				companyId, className, tableName, columnName, classPK, dates);
 		}
 		else if (type == ExpandoColumnConstants.DOUBLE) {
 			return expandoValueLocalService.addValue(

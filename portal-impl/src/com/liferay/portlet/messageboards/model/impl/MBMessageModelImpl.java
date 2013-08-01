@@ -17,6 +17,7 @@ package com.liferay.portlet.messageboards.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -408,8 +409,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -432,8 +433,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getMessageId() {
 		return _messageId;
 	}
@@ -445,8 +446,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_messageId = messageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -468,8 +469,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -491,8 +492,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -524,8 +525,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalUserId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -540,8 +541,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -553,8 +554,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -584,8 +585,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		setClassNameId(classNameId);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassNameId() {
 		return _classNameId;
 	}
@@ -607,8 +608,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalClassNameId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getClassPK() {
 		return _classPK;
 	}
@@ -630,8 +631,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalClassPK;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCategoryId() {
 		return _categoryId;
 	}
@@ -653,8 +654,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalCategoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getThreadId() {
 		return _threadId;
 	}
@@ -676,8 +677,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalThreadId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRootMessageId() {
 		return _rootMessageId;
 	}
@@ -687,8 +688,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_rootMessageId = rootMessageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentMessageId() {
 		return _parentMessageId;
 	}
@@ -710,8 +711,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalParentMessageId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getSubject() {
 		if (_subject == null) {
 			return StringPool.BLANK;
@@ -726,8 +727,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_subject = subject;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getBody() {
 		if (_body == null) {
 			return StringPool.BLANK;
@@ -742,8 +743,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_body = body;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getFormat() {
 		if (_format == null) {
 			return StringPool.BLANK;
@@ -758,8 +759,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_format = format;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAnonymous() {
 		return _anonymous;
 	}
@@ -774,8 +775,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_anonymous = anonymous;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public double getPriority() {
 		return _priority;
 	}
@@ -785,8 +786,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_priority = priority;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAllowPingbacks() {
 		return _allowPingbacks;
 	}
@@ -801,8 +802,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_allowPingbacks = allowPingbacks;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getAnswer() {
 		return _answer;
 	}
@@ -829,8 +830,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalAnswer;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -852,8 +853,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -874,8 +875,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -890,8 +891,8 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -899,6 +900,12 @@ public class MBMessageModelImpl extends BaseModelImpl<MBMessage>
 	@Override
 	public void setStatusDate(Date statusDate) {
 		_statusDate = statusDate;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				MBMessage.class.getName()), getClassNameId());
 	}
 
 	/**

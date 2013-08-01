@@ -15,7 +15,7 @@
 --%>
 
 <liferay-ui:search-container
-	rowChecker="<%= new RowChecker(renderResponse) %>"
+	rowChecker="<%= new SiteChecker(renderResponse) %>"
 	searchContainer="<%= new GroupSearch(renderRequest, portletURL) %>"
 >
 	<aui:input disabled="<%= true %>" name="sitesRedirect" type="hidden" value="<%= portletURL.toString() %>" />
@@ -55,7 +55,7 @@
 	<%@ include file="/html/portlet/sites_admin/toolbar.jspf" %>
 
 	<c:if test="<%= !results.isEmpty() %>">
-		<aui:button onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
+		<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteSites();" %>' value="delete" />
 	</c:if>
 
 	<liferay-ui:search-container-row

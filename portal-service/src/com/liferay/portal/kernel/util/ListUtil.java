@@ -267,6 +267,20 @@ public class ListUtil {
 		return list;
 	}
 
+	public static List<Character> toList(char[] array) {
+		if ((array == null) || (array.length == 0)) {
+			return new ArrayList<Character>();
+		}
+
+		List<Character> list = new ArrayList<Character>(array.length);
+
+		for (char value : array) {
+			list.add(value);
+		}
+
+		return list;
+	}
+
 	public static List<Double> toList(double[] array) {
 		if ((array == null) || (array.length == 0)) {
 			return new ArrayList<Double>();
@@ -367,7 +381,14 @@ public class ListUtil {
 		for (int i = 0; i < list.size(); i++) {
 			Object bean = list.get(i);
 
-			Object value = BeanPropertiesUtil.getObject(bean, param);
+			Object value = null;
+
+			if (Validator.isNull(param)) {
+				value = String.valueOf(bean);
+			}
+			else {
+				value = BeanPropertiesUtil.getObject(bean, param);
+			}
 
 			if (value != null) {
 				sb.append(value);

@@ -71,8 +71,9 @@ public class ExportUsersAction extends PortletAction {
 
 	@Override
 	public void processAction(
-			ActionMapping mapping, ActionForm form, PortletConfig portletConfig,
-			ActionRequest actionRequest, ActionResponse actionResponse)
+			ActionMapping actionMapping, ActionForm actionForm,
+			PortletConfig portletConfig, ActionRequest actionRequest,
+			ActionResponse actionResponse)
 		throws Exception {
 
 		try {
@@ -251,10 +252,9 @@ public class ExportUsersAction extends PortletAction {
 		String exportProgressId = ParamUtil.getString(
 			actionRequest, "exportProgressId");
 
-		ProgressTracker progressTracker = new ProgressTracker(
-			actionRequest, exportProgressId);
+		ProgressTracker progressTracker = new ProgressTracker(exportProgressId);
 
-		progressTracker.start();
+		progressTracker.start(actionRequest);
 
 		int percentage = 10;
 		int total = users.size();
@@ -273,7 +273,7 @@ public class ExportUsersAction extends PortletAction {
 			progressTracker.setPercent(percentage);
 		}
 
-		progressTracker.finish();
+		progressTracker.finish(actionRequest);
 
 		return sb.toString();
 	}

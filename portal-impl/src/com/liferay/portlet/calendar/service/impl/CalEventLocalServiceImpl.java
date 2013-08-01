@@ -24,8 +24,6 @@ import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedOutputStream;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -69,7 +67,6 @@ import com.liferay.portlet.calendar.EventTitleException;
 import com.liferay.portlet.calendar.model.CalEvent;
 import com.liferay.portlet.calendar.model.CalEventConstants;
 import com.liferay.portlet.calendar.service.base.CalEventLocalServiceBaseImpl;
-import com.liferay.portlet.calendar.social.CalendarActivityKeys;
 import com.liferay.portlet.calendar.util.CalUtil;
 import com.liferay.util.TimeZoneSensitive;
 
@@ -157,7 +154,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
@@ -243,16 +240,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 				event.getEventId(), WorkflowConstants.ACTION_PUBLISH);
 		}
 
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", event.getTitle());
-
-		socialActivityLocalService.addActivity(
-			userId, groupId, CalEvent.class.getName(), eventId,
-			CalendarActivityKeys.ADD_EVENT, extraDataJSONObject.toString(), 0);
-
 		// Pool
 
 		CalEventLocalUtil.clearEventsPool(event.getGroupId());
@@ -266,8 +253,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, String, boolean, TZSRecurrence, int, int, int,
 	 *             ServiceContext)}
 	 */
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent addEvent(
 			long userId, String title, String description, String location,
 			int startDateMonth, int startDateDay, int startDateYear,
@@ -333,17 +320,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkEvents() throws PortalException, SystemException {
+	public void checkEvents() throws SystemException {
 		List<CalEvent> events = calEventFinder.findByFutureReminders();
 
 		for (CalEvent event : events) {
 			User user = userPersistence.fetchByPrimaryKey(event.getUserId());
-
-			if (user == null) {
-				calEventLocalService.deleteEvent(event);
-
-				continue;
-			}
 
 			Calendar now = CalendarFactoryUtil.getCalendar(
 				user.getTimeZone(), user.getLocale());
@@ -813,7 +794,7 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			timeZone = user.getTimeZone();
 		}
 		else {
-			locale = LocaleUtil.getDefault();
+			locale = LocaleUtil.getSiteDefault();
 			timeZone = TimeZoneUtil.getTimeZone(StringPool.UTC);
 		}
 
@@ -868,17 +849,6 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 			serviceContext.getAssetTagNames(),
 			serviceContext.getAssetLinkEntryIds());
 
-		// Social
-
-		JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
-
-		extraDataJSONObject.put("title", event.getTitle());
-
-		socialActivityLocalService.addActivity(
-			userId, event.getGroupId(), CalEvent.class.getName(), eventId,
-			CalendarActivityKeys.UPDATE_EVENT, extraDataJSONObject.toString(),
-			0);
-
 		// Pool
 
 		CalEventLocalUtil.clearEventsPool(event.getGroupId());
@@ -892,8 +862,8 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 	 *             boolean, boolean, String, boolean, TZSRecurrence, int, int,
 	 *             int, ServiceContext)}
 	 */
-	@Override
 	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CalEvent updateEvent(
 			long userId, long eventId, String title, String description,
 			String location, int startDateMonth, int startDateDay,
@@ -1044,10 +1014,11 @@ public class CalEventLocalServiceImpl extends CalEventLocalServiceBaseImpl {
 
 		String title = StringPool.BLANK;
 
-		if (event.getSummary() != null) {
+		Summary summary = event.getSummary();
+
+		if ((summary != null) && Validator.isNotNull(summary.getValue())) {
 			title = ModelHintsUtil.trimString(
-				CalEvent.class.getName(), "title",
-				event.getSummary().getValue());
+				CalEvent.class.getName(), "title", summary.getValue());
 		}
 		else {
 			title =

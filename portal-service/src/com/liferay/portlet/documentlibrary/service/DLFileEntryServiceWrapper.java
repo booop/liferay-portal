@@ -19,8 +19,8 @@ import com.liferay.portal.service.ServiceWrapper;
 /**
  * Provides a wrapper for {@link DLFileEntryService}.
  *
- * @author    Brian Wing Shun Chan
- * @see       DLFileEntryService
+ * @author Brian Wing Shun Chan
+ * @see DLFileEntryService
  * @generated
  */
 public class DLFileEntryServiceWrapper implements DLFileEntryService,
@@ -387,6 +387,25 @@ public class DLFileEntryServiceWrapper implements DLFileEntryService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_dlFileEntryService.revertFileEntry(fileEntryId, version, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.search(groupId, creatorUserId, status,
+			start, end);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.Hits search(long groupId,
+		long creatorUserId, long folderId, java.lang.String[] mimeTypes,
+		int status, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _dlFileEntryService.search(groupId, creatorUserId, folderId,
+			mimeTypes, status, start, end);
 	}
 
 	@Override

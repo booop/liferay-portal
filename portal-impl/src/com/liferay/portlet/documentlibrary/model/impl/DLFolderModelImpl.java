@@ -17,6 +17,7 @@ package com.liferay.portlet.documentlibrary.model.impl;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -379,8 +380,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		}
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUuid() {
 		if (_uuid == null) {
 			return StringPool.BLANK;
@@ -403,8 +404,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return GetterUtil.getString(_originalUuid);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getFolderId() {
 		return _folderId;
 	}
@@ -414,8 +415,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_folderId = folderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -437,8 +438,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalGroupId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -460,8 +461,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalCompanyId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getUserId() {
 		return _userId;
 	}
@@ -481,8 +482,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_userUuid = userUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getUserName() {
 		if (_userName == null) {
 			return StringPool.BLANK;
@@ -497,8 +498,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_userName = userName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getCreateDate() {
 		return _createDate;
 	}
@@ -508,8 +509,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_createDate = createDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
 	}
@@ -519,8 +520,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_modifiedDate = modifiedDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getRepositoryId() {
 		return _repositoryId;
 	}
@@ -542,8 +543,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalRepositoryId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getMountPoint() {
 		return _mountPoint;
 	}
@@ -570,8 +571,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalMountPoint;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getParentFolderId() {
 		return _parentFolderId;
 	}
@@ -593,8 +594,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalParentFolderId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getName() {
 		if (_name == null) {
 			return StringPool.BLANK;
@@ -619,8 +620,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return GetterUtil.getString(_originalName);
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getDescription() {
 		if (_description == null) {
 			return StringPool.BLANK;
@@ -635,8 +636,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_description = description;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getLastPostDate() {
 		return _lastPostDate;
 	}
@@ -646,8 +647,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_lastPostDate = lastPostDate;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getDefaultFileEntryTypeId() {
 		return _defaultFileEntryTypeId;
 	}
@@ -657,8 +658,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_defaultFileEntryTypeId = defaultFileEntryTypeId;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getHidden() {
 		return _hidden;
 	}
@@ -685,8 +686,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalHidden;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public boolean getOverrideFileEntryTypes() {
 		return _overrideFileEntryTypes;
 	}
@@ -701,8 +702,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_overrideFileEntryTypes = overrideFileEntryTypes;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public int getStatus() {
 		return _status;
 	}
@@ -724,8 +725,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		return _originalStatus;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public long getStatusByUserId() {
 		return _statusByUserId;
 	}
@@ -746,8 +747,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_statusByUserUuid = statusByUserUuid;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public String getStatusByUserName() {
 		if (_statusByUserName == null) {
 			return StringPool.BLANK;
@@ -762,8 +763,8 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 		_statusByUserName = statusByUserName;
 	}
 
-	@Override
 	@JSON
+	@Override
 	public Date getStatusDate() {
 		return _statusDate;
 	}
@@ -796,6 +797,12 @@ public class DLFolderModelImpl extends BaseModelImpl<DLFolder>
 	@Override
 	public String getContainerModelName() {
 		return String.valueOf(getName());
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				DLFolder.class.getName()));
 	}
 
 	/**

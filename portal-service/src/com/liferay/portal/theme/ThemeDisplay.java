@@ -241,21 +241,21 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroup}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroup}
 	 */
 	public Group getParentGroup() {
 		return getSiteGroup();
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupId}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupId}
 	 */
 	public long getParentGroupId() {
 		return getSiteGroupId();
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupName}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupName}
 	 */
 	public String getParentGroupName() throws PortalException, SystemException {
 		return getSiteGroupName();
@@ -404,7 +404,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #getSiteGroupIdOrLiveGroupId}
+	 * @deprecated As of 6.2.0 renamed to {@link #getSiteGroupIdOrLiveGroupId}
 	 */
 	public long getScopeGroupIdOrLiveGroupId()
 		throws PortalException, SystemException {
@@ -416,9 +416,8 @@ public class ThemeDisplay
 		if (_scopeGroup == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _scopeGroup.getDescriptiveName();
-		}
+
+		return _scopeGroup.getDescriptiveName();
 	}
 
 	public Layout getScopeLayout() throws PortalException, SystemException {
@@ -445,6 +444,10 @@ public class ThemeDisplay
 		return _sessionId;
 	}
 
+	public Locale getSiteDefaultLocale() {
+		return _siteDefaultLocale;
+	}
+
 	public Group getSiteGroup() {
 		return _siteGroup;
 	}
@@ -463,9 +466,8 @@ public class ThemeDisplay
 		if (_siteGroup == null) {
 			return StringPool.BLANK;
 		}
-		else {
-			return _siteGroup.getDescriptiveName();
-		}
+
+		return _siteGroup.getDescriptiveName();
 	}
 
 	public Theme getTheme() {
@@ -646,9 +648,8 @@ public class ThemeDisplay
 		if (getUserId() == getRealUserId()) {
 			return false;
 		}
-		else {
-			return true;
-		}
+
+		return true;
 	}
 
 	public boolean isIncludedJs(String js) {
@@ -659,9 +660,8 @@ public class ThemeDisplay
 
 			return true;
 		}
-		else {
-			return false;
-		}
+
+		return false;
 	}
 
 	public boolean isIncludePortletCssJs() {
@@ -1055,7 +1055,7 @@ public class ThemeDisplay
 	}
 
 	/**
-	 * @deprecated As of 6.2 renamed to {@link #setSiteGroupId(long)}
+	 * @deprecated As of 6.2.0 renamed to {@link #setSiteGroupId(long)}
 	 */
 	public void setParentGroupId(long parentGroupId) {
 		setSiteGroupId(parentGroupId);
@@ -1295,6 +1295,12 @@ public class ThemeDisplay
 
 	public void setSignedIn(boolean signedIn) {
 		_signedIn = signedIn;
+	}
+
+	public void setSiteDefaultLocale(Locale siteDefaultLocale) {
+		_siteDefaultLocale = siteDefaultLocale;
+
+		LocaleThreadLocal.setSiteDefaultLocale(siteDefaultLocale);
 	}
 
 	public void setSiteGroupId(long siteGroupId) {
@@ -1550,6 +1556,7 @@ public class ThemeDisplay
 	private boolean _showSiteSettingsIcon;
 	private boolean _showStagingIcon;
 	private boolean _signedIn;
+	private Locale _siteDefaultLocale;
 	private Group _siteGroup;
 	private long _siteGroupId;
 	private boolean _stateExclusive;

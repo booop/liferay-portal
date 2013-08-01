@@ -14,10 +14,13 @@
 
 package com.liferay.portal.lar;
 
-import com.liferay.portal.kernel.lar.ExportImportUtil;
+import com.liferay.portal.kernel.lar.ExportImportHelperUtil;
 import com.liferay.portal.kernel.lar.ManifestSummary;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.util.LongWrapper;
+import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
@@ -48,23 +51,34 @@ public class ManifestSummaryTest
 		ManifestSummary manifestSummary =
 			portletDataContext.getManifestSummary();
 
-		Map<String, Long> modelCountMap = manifestSummary.getModelCounters();
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
 
-		Assert.assertEquals(4, modelCountMap.size());
+		Assert.assertEquals(4, modelAdditionCounters.size());
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMStructure.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				DDMStructure.class, JournalArticle.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMTemplate.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				DDMTemplate.class, DDMStructure.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(JournalArticle.class));
+			1, manifestSummary.getModelAdditionCount(JournalArticle.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(JournalFolder.class));
+			1, manifestSummary.getModelAdditionCount(JournalFolder.class));
 
 		Document document = SAXReaderUtil.createDocument();
 
-		document.addElement("root");
+		Element rootElement = document.addElement("root");
 
-		ExportImportUtil.writeManifestSummary(document, manifestSummary);
+		Element headerElement = rootElement.addElement("header");
+
+		_exportDateString = Time.getRFC822();
+
+		headerElement.addAttribute("export-date", _exportDateString);
+
+		ExportImportHelperUtil.writeManifestSummary(document, manifestSummary);
 
 		zipWriter.addEntry("/manifest.xml", document.asXML());
 	}
@@ -76,21 +90,34 @@ public class ManifestSummaryTest
 			Group group)
 		throws Exception {
 
-		ManifestSummary manifestSummary = ExportImportUtil.getManifestSummary(
-			TestPropsValues.getUserId(), liveGroup.getGroupId(),
-			getParameterMap(), zipWriter.getFile());
+		ManifestSummary manifestSummary =
+			ExportImportHelperUtil.getManifestSummary(
+				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				getParameterMap(), zipWriter.getFile());
 
-		Map<String, Long> modelCountMap = manifestSummary.getModelCounters();
+		Map<String, LongWrapper> modelAdditionCounters =
+			manifestSummary.getModelAdditionCounters();
 
-		Assert.assertEquals(4, modelCountMap.size());
+		Assert.assertEquals(4, modelAdditionCounters.size());
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMStructure.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				DDMStructure.class, JournalArticle.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(DDMTemplate.class));
+			1,
+			manifestSummary.getModelAdditionCount(
+				DDMTemplate.class, DDMStructure.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(JournalArticle.class));
+			1, manifestSummary.getModelAdditionCount(JournalArticle.class));
 		Assert.assertEquals(
-			1, manifestSummary.getModelCount(JournalFolder.class));
+			1, manifestSummary.getModelAdditionCount(JournalFolder.class));
+
+		String exportedDateString = Time.getRFC822(
+			manifestSummary.getExportDate());
+
+		Assert.assertEquals(_exportDateString, exportedDateString);
 	}
+
+	private String _exportDateString;
 
 }
